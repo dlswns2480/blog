@@ -7,5 +7,6 @@ import org.springframework.boot.runApplication
 class WebApplication
 
 fun main(args: Array<String>) {
+    System.setProperty("spring.config.name", "application-core")
     runApplication<WebApplication>(*args)
 }
