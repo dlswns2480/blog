@@ -1,5 +1,7 @@
 package com.junlog.auth.application
 
+import com.junlog.auth.domain.model.RefreshToken
+import com.junlog.auth.domain.model.RefreshTokenPort
 import com.junlog.auth.domain.model.Token
 import com.junlog.auth.exception.AuthErrorCode
 import com.junlog.auth.property.JwtProperty
@@ -14,6 +16,7 @@ import io.jsonwebtoken.*
 @Component
 class JwtTokenProvider(
     private val jwtProperty: JwtProperty,
+    private val refreshTokenPort: RefreshTokenPort
 ) {
     companion object {
         private const val TO_DAY = 86400000
@@ -21,6 +24,9 @@ class JwtTokenProvider(
     fun createToken(userId: Long): Token {
         val accessToken = generateToken(userId, jwtProperty.accessExpiryTime * TO_DAY)
         val refreshToken = generateToken(userId, jwtProperty.refreshExpiryTime * TO_DAY)
+
+        refreshTokenPort.deleteByUserId(userId)
+        refreshTokenPort.persist(RefreshToken(userId = userId, token = refreshToken))
 
         return Token(accessToken, refreshToken)
     }
