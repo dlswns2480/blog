@@ -50,3 +50,6 @@ class UserService(
     }
 
 }
+
+fun UserPort.validate(userId: Long) = loadById(userId)
+        ?: throw NotFoundCustomException(UserErrorCode.NOT_FOUND_USER)
