@@ -31,6 +31,7 @@ class ArticleEntity(
 
     companion object {
         fun of(article: Article) = ArticleEntity(
+            id = article.id,
             userId = article.userId,
             title = article.title,
             content = article.content
