@@ -4,5 +4,9 @@ data class Comment(
     val id: Long = 0L,
     val userId: Long,
     val articleId: Long,
-    val content: String
-)
+    var content: String
+) {
+    fun edit(content: String) {
+        this.content = content
+    }
+}
