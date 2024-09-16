@@ -6,6 +6,7 @@ import com.junlog.article.dto.request.CreateArticleRequest
 import com.junlog.article.dto.request.UpdateArticleRequest
 import com.junlog.auth.application.JwtTokenProvider
 import com.junlog.support.TestContainerSupport
+import com.junlog.support.TestUtils
 import com.junlog.user.UserFixture
 import com.junlog.user.domain.model.UserPort
 import io.github.oshai.kotlinlogging.KotlinLogging
@@ -50,7 +51,7 @@ class ArticleControllerTest(
             val performRequest = mockMvc.perform(post("/api/v1/articles")
                     .header(AUTHORIZATION, accessToken)
                     .contentType(APPLICATION_JSON)
-                    .content(toJson(createRequest))
+                    .content(TestUtils.toJson(createRequest))
             )
             it("요청이 성공한다.") {
                 performRequest.andExpect(
@@ -71,7 +72,7 @@ class ArticleControllerTest(
             val performRequest = mockMvc.perform(
                 put("/api/v1/articles/{articleId}", savedArticle.id)
                     .contentType(APPLICATION_JSON)
-                    .content(toJson(updateRequest))
+                    .content(TestUtils.toJson(updateRequest))
                     .header(AUTHORIZATION, accessToken)
             )
             it("요청이 성공한다.") {
@@ -100,7 +101,3 @@ class ArticleControllerTest(
         }
     }
 })
-
-private fun toJson(json: Any): String {
-    return jacksonObjectMapper().writeValueAsString(json)
-}
