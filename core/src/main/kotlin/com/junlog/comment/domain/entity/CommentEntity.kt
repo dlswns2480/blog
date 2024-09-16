@@ -31,9 +31,17 @@ class CommentEntity(
 
     companion object {
         fun of(comment: Comment) = CommentEntity(
+            id = comment.id,
             userId = comment.userId,
             articleId = comment.articleId,
             content = comment.content
         )
     }
 }
+
+internal fun CommentEntity.toDomain() = Comment(
+    id = this.id,
+    userId = this.userId,
+    articleId = this.articleId,
+    content = this.content
+)
