@@ -14,7 +14,6 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-web")
 
     testImplementation(testFixtures(project(":core")))
-    testImplementation("io.kotest.extensions:kotest-extensions-spring:1.1.1")
 }
 
 tasks {
