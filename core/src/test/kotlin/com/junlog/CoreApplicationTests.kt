@@ -1,11 +1,11 @@
 package com.junlog
 
 import org.springframework.boot.autoconfigure.SpringBootApplication
+import org.springframework.boot.context.properties.ConfigurationPropertiesScan
 import org.springframework.boot.runApplication
-import org.springframework.context.annotation.Import
 
 @SpringBootApplication
-@Import(TestcontainersConfiguration::class)
+@ConfigurationPropertiesScan
 class InfraApplicationTests
 
 fun main(args: Array<String>) {

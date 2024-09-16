@@ -22,17 +22,18 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
     runtimeOnly("com.mysql:mysql-connector-j")
     implementation("org.springframework.security:spring-security-crypto")
-    testImplementation("org.springframework.boot:spring-boot-testcontainers")
-    testImplementation("org.springframework.boot:spring-boot-starter-test")
 
     //jwt
     implementation("io.jsonwebtoken:jjwt-api:0.12.6")
     runtimeOnly("io.jsonwebtoken:jjwt-impl:0.12.6")
     runtimeOnly("io.jsonwebtoken:jjwt-jackson:0.12.6")
 
-    testImplementation("org.testcontainers:junit-jupiter")
-    testImplementation("org.testcontainers:mysql")
-    testRuntimeOnly("org.junit.platform:junit-platform-launcher")
+    testFixturesImplementation("org.springframework.boot:spring-boot-testcontainers")
+    testFixturesImplementation("org.springframework.boot:spring-boot-starter-test")
+    testFixturesImplementation("org.testcontainers:mysql")
+    testFixturesImplementation("io.kotest.extensions:kotest-extensions-spring:1.1.1")
+    testFixturesCompileOnly("org.springframework.boot:spring-boot-starter-security")
+    testFixturesImplementation("io.mockk:mockk:1.13.7")
 }
 
 tasks {
