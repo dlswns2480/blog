@@ -27,4 +27,8 @@ class CommentAdapter(
         commentRepository.findByIdOrNull(comment.id)
             ?.delete()
     }
+
+    override fun deleteAllByUserId(userId: Long) {
+        commentRepository.deleteAllByUserId(userId)
+    }
 }

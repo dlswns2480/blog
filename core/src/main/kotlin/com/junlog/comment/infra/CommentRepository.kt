@@ -14,4 +14,11 @@ interface CommentRepository : JpaRepository<CommentEntity, Long> {
     fun deleteAllByArticleId(@Param("articleId") articleId: Long)
 
     fun findByIdAndUserIdAndDeleted(id: Long, userId: Long, deleted: Boolean): CommentEntity?
+
+    @Modifying(clearAutomatically = true)
+    @Query("""
+        update CommentEntity c set c.deleted = true
+        where c.userId = :userId
+    """)
+    fun deleteAllByUserId(@Param("userId") userId: Long)
 }
