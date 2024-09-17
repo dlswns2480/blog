@@ -12,7 +12,7 @@ class UserAdapter(
     private val userRepository: UserRepository
 ) : UserPort {
     override fun loadById(id: Long): User? {
-        return userRepository.findByIdOrNull(id)
+        return userRepository.findByIdAndDeleted(id, false)
             ?.run { toDomain() }
     }
 
@@ -22,11 +22,16 @@ class UserAdapter(
     }
 
     override fun loadByEmail(email: String): User? {
-        return userRepository.findByEmail(email)
+        return userRepository.findByEmailAndDeleted(email, false)
             ?.run { toDomain() }
     }
 
     override fun existsByUsername(username: String): Boolean {
-        return userRepository.existsByUsername(username)
+        return userRepository.existsByUsernameAndDeleted(username, false)
+    }
+
+    override fun delete(user: User) {
+        userRepository.findByIdOrNull(user.id)
+            ?.delete()
     }
 }

@@ -8,4 +8,6 @@ interface ArticlePort {
     fun delete(article: Article)
 
     fun loadById(articleId: Long): Article?
+
+    fun deleteAllByUserId(userId: Long)
 }

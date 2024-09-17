@@ -8,4 +8,6 @@ interface UserPort {
     fun loadByEmail(email: String): User?
 
     fun existsByUsername(username: String): Boolean
+
+    fun delete(user: User)
 }

@@ -32,4 +32,8 @@ class ArticleAdapter(
         return articleRepository.findByIdAndDeleted(articleId, false)
             ?.run { toDomain() }
     }
+
+    override fun deleteAllByUserId(userId: Long) {
+        articleRepository.deleteAllByUserId(userId)
+    }
 }
