@@ -1,7 +1,9 @@
 package com.junlog.user.application
 
+import com.junlog.article.domain.model.ArticlePort
 import com.junlog.auth.application.JwtTokenProvider
 import com.junlog.auth.domain.model.Token
+import com.junlog.comment.domain.model.CommentPort
 import com.junlog.common.exception.ClientValidationException
 import com.junlog.common.exception.NotFoundCustomException
 import com.junlog.user.domain.model.User
@@ -18,7 +20,9 @@ import org.springframework.transaction.annotation.Transactional
 class UserService(
     private val userPort: UserPort,
     private val passwordEncoder: PasswordEncoder,
-    private val tokenProvider: JwtTokenProvider
+    private val tokenProvider: JwtTokenProvider,
+    private val commentPort: CommentPort,
+    private val articlePort: ArticlePort
 ) {
     @Transactional
     fun signUp(command: UserCommand): User {
@@ -49,6 +53,12 @@ class UserService(
         return tokenProvider.createToken(user.id)
     }
 
+    @Transactional
+    fun revoke(user: User) {
+        commentPort.deleteAllByUserId(user.id)
+        articlePort.deleteAllByUserId(user.id)
+        userPort.delete(user)
+    }
 }
 
 fun UserPort.validate(userId: Long) = loadById(userId)
