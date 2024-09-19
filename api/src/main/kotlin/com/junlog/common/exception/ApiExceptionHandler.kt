@@ -28,7 +28,7 @@ class ApiExceptionHandler {
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(JunlogException::class)
-    fun handlePokitException(e: JunlogException): ErrorResponse {
+    fun handleJunlogException(e: JunlogException): ErrorResponse {
         logger.warn { "JunlogException: ${e.message} / $e" }
         return ErrorResponse(e.errorCode.message, e.errorCode.code)
     }
