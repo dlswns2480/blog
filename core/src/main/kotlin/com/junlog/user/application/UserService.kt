@@ -26,6 +26,10 @@ class UserService(
 ) {
     @Transactional
     fun signUp(command: UserCommand): User {
+        if(userPort.existsByEmail(command.email)) {
+            throw ClientValidationException(UserErrorCode.ALREADY_EXISTS_EMAIL)
+        }
+
         if(userPort.existsByUsername(command.username)) {
             throw ClientValidationException(UserErrorCode.ALREADY_EXISTS_NAME)
         }
