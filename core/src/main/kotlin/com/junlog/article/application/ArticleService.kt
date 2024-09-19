@@ -8,7 +8,6 @@ import com.junlog.article.dto.response.toArticleInfo
 import com.junlog.article.exception.ArticleErrorCode
 import com.junlog.comment.domain.model.CommentPort
 import com.junlog.common.exception.NotFoundCustomException
-import com.junlog.user.application.validate
 import com.junlog.user.domain.model.User
 import com.junlog.user.domain.model.UserPort
 import io.github.oshai.kotlinlogging.KotlinLogging
@@ -26,14 +25,13 @@ class ArticleService(
 
     @Transactional
     fun create(user: User, command: ArticleCommand): ArticleInfo {
-        val findUser = userPort.validate(user.id)
         val article = Article(
-            userId = findUser.id,
+            userId = user.id,
             title = command.title,
             content = command.content
         )
         val savedArticle = articlePort.persist(article)
-        return savedArticle.toArticleInfo(findUser.email)
+        return savedArticle.toArticleInfo(user.email)
     }
 
     @Transactional
