@@ -26,12 +26,14 @@ class UserAdapter(
             ?.run { toDomain() }
     }
 
-    override fun existsByUsername(username: String): Boolean {
-        return userRepository.existsByUsernameAndDeleted(username, false)
-    }
+    override fun existsByUsername(username: String) =
+        userRepository.existsByUsernameAndDeleted(username, false)
 
     override fun delete(user: User) {
         userRepository.findByIdOrNull(user.id)
             ?.delete()
     }
+
+    override fun existsByEmail(email: String) =
+        userRepository.existsByEmailAndDeleted(email, false)
 }

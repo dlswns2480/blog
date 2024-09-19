@@ -10,4 +10,6 @@ interface UserPort {
     fun existsByUsername(username: String): Boolean
 
     fun delete(user: User)
+
+    fun existsByEmail(email: String): Boolean
 }
