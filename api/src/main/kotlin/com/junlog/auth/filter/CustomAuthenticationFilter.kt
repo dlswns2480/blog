@@ -5,6 +5,7 @@ import com.junlog.auth.exception.AuthErrorCode
 import com.junlog.auth.model.PrincipalUser
 import com.junlog.common.exception.ClientValidationException
 import com.junlog.common.exception.NotFoundCustomException
+import com.junlog.user.application.validate
 import com.junlog.user.domain.model.UserPort
 import com.junlog.user.exception.UserErrorCode
 import jakarta.servlet.FilterChain
@@ -67,10 +68,7 @@ class CustomAuthenticationFilter(
 
         val token = header.split(" ")[1]
         val userId = tokenProvider.getUserId(token)
-        val user = (
-            userPort.loadById(userId)
-                ?: throw NotFoundCustomException(UserErrorCode.NOT_FOUND_USER)
-        )
+        val user = userPort.validate(userId)
 
         val principalUser = PrincipalUser.of(user)
         val authorities = listOf(SimpleGrantedAuthority(principalUser.role.description))
